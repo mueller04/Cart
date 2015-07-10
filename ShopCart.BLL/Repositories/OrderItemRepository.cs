@@ -72,16 +72,5 @@ namespace ShopCart.BLL
             var matchedCatalogIndex = catalogProducts.FindIndex(x => x.Name == name);
             catalogProducts[matchedCatalogIndex].OnHand += onHandToRestore;
         }
-
-        public string ReturnDisplay(OrderItem item, bool isCartDisplay)
-        {
-            return item.Name + ": " + item.Quantity + ": " + String.Format("{0:C}", item.Price);
-        }
-
-        public string ReturnDisplay(Product product)
-        {
-            return product.Name + ": " + product.OnHand;
-        }
     }
-   
 }

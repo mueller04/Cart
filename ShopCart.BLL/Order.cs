@@ -33,7 +33,7 @@ namespace ShoppingCart
             orderDetails.Add(_paymentProcessor.Process());
             foreach (var orderItem in _cart.OrderRepo.CartItems)
             {
-                orderDetails.Add(_cart.OrderRepo.ReturnDisplay(orderItem, isCartDisplay:true));
+                orderDetails.Add(Helpers.ReturnDisplay(orderItem));
             }
 
             UpdateOnHand(catalogProducts);

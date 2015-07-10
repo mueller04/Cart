@@ -71,7 +71,7 @@ namespace ShoppingCartView
             var cartItemsList = ActiveCart.GetItemsInCart();
             foreach (var cartItem in cartItemsList)
             {
-                lstDisplay.Items.Add(orderRepo.ReturnDisplay(cartItem, isCartDisplay:false));
+                lstDisplay.Items.Add(Helpers.ReturnDisplay(cartItem));
                 
                 TotalPrice += cartItem.Price;
             }
@@ -99,7 +99,7 @@ namespace ShoppingCartView
             catalogProducts = productRepo.GetProducts();
             foreach (Product prod in catalogProducts)
             {
-                lstSelection.Items.Add(orderRepo.ReturnDisplay(prod));   
+                lstSelection.Items.Add(Helpers.ReturnDisplay(prod));   
             }
         }
 
