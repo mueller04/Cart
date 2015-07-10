@@ -17,7 +17,7 @@ namespace ShopCart.BLL
         public List<OrderItem> GetItemsInCart()
         {
             var resultlist = new List<OrderItem>();
-            foreach (OrderItem item in OrderRepo.Items)
+            foreach (OrderItem item in OrderRepo.CartItems)
             {
                 resultlist.Add(item);
             }

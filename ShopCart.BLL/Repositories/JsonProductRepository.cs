@@ -15,7 +15,7 @@ namespace ShopCart.BLL
 
         public List<Product> GetProducts()
         {
-            using (StreamReader file = File.OpenText(@"c:\Users\mike\Documents\Visual Studio 2013\Projects\ShoppingCart\files.json"))
+            using (StreamReader file = File.OpenText(@"C:\Users\mike\Documents\GitHub\Cart\files.json"))
             {
                 ProductsOnHand = (List<Product>)_serializer.Deserialize(file, typeof(List<Product>));
                 return ProductsOnHand;;
@@ -25,7 +25,7 @@ namespace ShopCart.BLL
         // TO DO - see if it can save json with the nicer formatting
         public void SaveProducts(List<Product> productsToSave)
         {
-            using (StreamWriter sw = new StreamWriter(@"c:\Users\mike\Documents\Visual Studio 2013\Projects\ShoppingCart\files.json"))
+            using (StreamWriter sw = new StreamWriter(@"C:\Users\mike\Documents\GitHub\Cart\files.json"))
             using (JsonTextWriter writer = new JsonTextWriter(sw))
             {
                 _serializer.Serialize(writer, productsToSave);
@@ -38,7 +38,7 @@ namespace ShopCart.BLL
         {
             using (
                 StreamWriter sw =
-                    new StreamWriter(@"c:\Users\mike\Documents\Visual Studio 2013\Projects\ShoppingCart\Order\order" + orderNumber +".json"))
+                    new StreamWriter(@"C:\Users\mike\Documents\GitHub\Cart\Order\order" + orderNumber + ".json"))
             using (JsonTextWriter writer = new JsonTextWriter(sw))
             {
                 _serializer.Serialize(writer, orderDetails);
@@ -49,29 +49,32 @@ namespace ShopCart.BLL
 
         public int IncrementFile()
         {
-            int incrementor;
+            int incrementor = GetIncrementorNumberFromFile();
+            incrementor++;
+            WriteIncrementNumberToIncrementFile(incrementor);
+            return incrementor;
+        }
+
+        public int GetIncrementorNumberFromFile()
+        {
             using (
                 StreamReader file =
                     File.OpenText(
-                        @"c:\Users\mike\Documents\Visual Studio 2013\Projects\ShoppingCart\orderNumberIncrementor.json")
+                        @"C:\Users\mike\Documents\GitHub\Cart\orderNumberIncrementor.json")
                 )
             {
-                incrementor = (int)_serializer.Deserialize(file, typeof (int));
+                return (int) _serializer.Deserialize(file, typeof (int));
             }
+        }
 
-            incrementor++;
-
-            using (StreamWriter sw = new StreamWriter(@"c:\Users\mike\Documents\Visual Studio 2013\Projects\ShoppingCart\orderNumberIncrementor.json"))
+        public void WriteIncrementNumberToIncrementFile(int incrementor)
+        {
+            using (StreamWriter sw = new StreamWriter(@"C:\Users\mike\Documents\GitHub\Cart\orderNumberIncrementor.json"))
             using (JsonTextWriter writer = new JsonTextWriter(sw))
             {
                 _serializer.Serialize(writer, incrementor);
             }
-
-            return incrementor;
-
-
         }
-
 
     }
 }

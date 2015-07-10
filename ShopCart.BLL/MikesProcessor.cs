@@ -11,7 +11,7 @@ namespace ShoppingCart
     {
         public string Process()
         {
-            return "PayPal Processed Succesfully";
+            return "PayPal Processed Successfully";
         }
     }
 }

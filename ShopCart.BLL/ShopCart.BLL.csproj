@@ -52,6 +52,7 @@
   <ItemGroup>
     <Compile Include="Cart.cs" />
     <Compile Include="DBFactory.cs" />
+    <Compile Include="Helpers.cs" />
     <Compile Include="Interfaces\IOrderItemRepository.cs" />
     <Compile Include="Interfaces\INotificationService.cs" />
     <Compile Include="Interfaces\IPaymentProcessor.cs" />

@@ -28,14 +28,11 @@ namespace ShoppingCartView
         public MainWindow()
         {
             InitializeComponent();
-
+            productRepo = new JsonProductRepository();
             notification = new NotificationService();
             paymentProcessor = new MikesProcessor();
             orderRepo = new OrderItemRepository();
             ActiveCart = new Cart(orderRepo);
-            productRepo = new JsonProductRepository();
-
-
             ListProductsInCatalog(productRepo);
         }
 
@@ -48,6 +45,9 @@ namespace ShoppingCartView
             AddItemToCart();
         }
 
+        //TODO after adding items the on hand doesn't decrement from the cataloglist because the order was not submitted yet
+        //Change how the onhand is displayed in the cataloglist so that it decrements appropriately when adding to catalog
+        //and increments when hitting remove from catalog button
         public void AddItemToCart()
         {
             if (lstSelection.SelectedIndex != -1)
@@ -66,11 +66,17 @@ namespace ShoppingCartView
         public void DisplayOrderView()
         {
             lstDisplay.Items.Clear();
+            decimal TotalPrice = 0;
+
             var cartItemsList = ActiveCart.GetItemsInCart();
             foreach (var cartItem in cartItemsList)
             {
-                lstDisplay.Items.Add(orderRepo.ReturnDisplay(cartItem));  
+                lstDisplay.Items.Add(orderRepo.ReturnDisplay(cartItem, isCartDisplay:false));
+                
+                TotalPrice += cartItem.Price;
             }
+            //TODO this should be returning the currency format with $ to the order total in the UI but it doesn't
+            txtTotal.Text = String.Format("{0:C}",TotalPrice.ToString());
             cartItemsList.Clear();
         }
 
@@ -79,6 +85,7 @@ namespace ShoppingCartView
             ActiveOrder = new Order(notification, ActiveCart, paymentProcessor);
             ActiveOrder.SubmitOrder(catalogProducts);
             lstDisplay.Items.Clear();
+            txtTotal.Clear();
             MessageBox.Show("Order Submitted Successfully");
         }
 
@@ -89,11 +96,10 @@ namespace ShoppingCartView
 
         public void ListProductsInCatalog(IProductRepository productRepo)
         {
-
             catalogProducts = productRepo.GetProducts();
             foreach (Product prod in catalogProducts)
             {
-                lstSelection.Items.Add(prod.Name);   
+                lstSelection.Items.Add(orderRepo.ReturnDisplay(prod));   
             }
         }
 
@@ -126,6 +132,9 @@ namespace ShoppingCartView
             RemoveItem();
         }
 
+        //TODO - adding the dollar to the string in the cart listbox broke this remove method.  The problem now is the regex
+        //here does not remove all of the characters like the $ anymore.  Find a way to use regex to remove eveything
+        //probably put that into the helper method, remove the regex code from here and call the Helper. method from here.
         private void RemoveItem()
         {
             if (lstDisplay.SelectedIndex != -1)

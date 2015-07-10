@@ -3,14 +3,16 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         Title="MainWindow" Height="350" Width="525">
     <Grid x:Name="MainWindow1">
-        <ListBox x:Name="lstSelection" HorizontalAlignment="Left" Height="100" Margin="63,48,0,0" VerticalAlignment="Top" Width="100" SelectionChanged="ListBox_SelectionChanged"/>
-        <Button x:Name="btnAddItem" Content="Add" HorizontalAlignment="Left" Margin="63,168,0,0" VerticalAlignment="Top" Width="100" Click="Button_Click" Height="22"/>
-        <ListBox x:Name="lstDisplay" HorizontalAlignment="Left" Height="100" Margin="307,48,0,0" VerticalAlignment="Top" Width="100"/>
-        <Button x:Name="btnSubmitOrder" Content="Submit Order" HorizontalAlignment="Left" Margin="307,226,0,0" VerticalAlignment="Top" Width="100" Height="37" Click="btnSubmitOrder_Click"/>
-        <Label Content="Catalog" HorizontalAlignment="Left" Margin="63,17,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.421,-0.192" Width="100"/>
-        <Label Content="Your Cart" HorizontalAlignment="Left" Margin="307,17,0,0" VerticalAlignment="Top" Width="100"/>
-        <ComboBox x:Name="cbQuantity" HorizontalAlignment="Left" Margin="179,168,0,0" VerticalAlignment="Top" Width="35" SelectionChanged="ComboBox_SelectionChanged" Loaded="cbQuantity_Loaded"/>
-        <Button x:Name="btnRemove" Content="Remove Item" HorizontalAlignment="Left" Margin="307,170,0,0" VerticalAlignment="Top" Width="100" Click="btnRemove_Click"/>
+        <ListBox x:Name="lstSelection" HorizontalAlignment="Left" Height="100" Margin="42,48,0,0" VerticalAlignment="Top" Width="121" SelectionChanged="ListBox_SelectionChanged"/>
+        <Button x:Name="btnAddItem" Content="Add" HorizontalAlignment="Left" Margin="42,174,0,0" VerticalAlignment="Top" Width="121" Click="Button_Click" Height="22"/>
+        <ListBox x:Name="lstDisplay" HorizontalAlignment="Left" Height="100" Margin="277,48,0,0" VerticalAlignment="Top" Width="148"/>
+        <Button x:Name="btnSubmitOrder" Content="Submit Order" HorizontalAlignment="Left" Margin="277,220,0,0" VerticalAlignment="Top" Width="148" Height="37" Click="btnSubmitOrder_Click"/>
+        <Label Content="Catalog" HorizontalAlignment="Left" Margin="42,17,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.421,-0.192" Width="100"/>
+        <Label Content="Your Cart" HorizontalAlignment="Left" Margin="277,17,0,0" VerticalAlignment="Top" Width="100"/>
+        <ComboBox x:Name="cbQuantity" HorizontalAlignment="Left" Margin="179,173,0,0" VerticalAlignment="Top" Width="35" SelectionChanged="ComboBox_SelectionChanged" Loaded="cbQuantity_Loaded"/>
+        <Button x:Name="btnRemove" Content="Remove Item" HorizontalAlignment="Left" Margin="277,175,0,0" VerticalAlignment="Top" Width="148" Click="btnRemove_Click"/>
+        <Label x:Name="lblTotalTitle" Content="Total" HorizontalAlignment="Left" Margin="445,25,0,0" VerticalAlignment="Top"/>
+        <TextBox x:Name="txtTotal" HorizontalAlignment="Left" Height="23" Margin="445,51,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="51" RenderTransformOrigin="0.634,0.174"/>
 
     </Grid>
 </Window>

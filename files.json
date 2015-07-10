@@ -1,1 +1,1 @@
-[{"Name":"cable","OnHand":19},{"Name":"charger","OnHand":16},{"Name":"battery","OnHand":20}]
+[{"Name":"cable","OnHand":11,"Price":5.0},{"Name":"charger","OnHand":4,"Price":9.0},{"Name":"battery","OnHand":4,"Price":13.0}]

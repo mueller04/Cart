@@ -35,7 +35,7 @@ namespace ShoppingCartView.Tests
         ////Cart ActiveCart = new Cart();
         //var MockCart = new Mock<IOrderItemRepository>();
         //    MockCart.SetupAllProperties();
-        //    MockCart.Object.Items = testList;
+        //    MockCart.Object.CartItems = testList;
         //    Order ActiveOrder = new Order(Notification, MockCart.Object, PaymentProcessor);
 
 
@@ -104,7 +104,7 @@ namespace ShoppingCartView.Tests
             windowTest.AddItemToCart();
 
             //Assert
-            Assert.AreEqual(2, windowTest.orderRepo.Items[3].Quantity);
+            Assert.AreEqual(2, windowTest.orderRepo.CartItems[3].Quantity);
         }
 
 
