@@ -21,10 +21,13 @@ namespace ShopCart.BLL
         {
             string nameOnlystr = Helpers.GetStringNameOnly(name);
 
-            OrderItem newItemToAddToCart = new OrderItem() { Name = nameOnlystr, Quantity = quantity };
+            OrderItem newItemToAddToCart = new OrderItem()
+            {
+                Name = nameOnlystr,
+                Quantity = quantity,
+            };
 
             Product matchedCatalogProduct = catalogProducts.FirstOrDefault(z => z.Name == newItemToAddToCart.Name);
-        
 
             if (matchedCatalogProduct.Price == 0)
             {
@@ -33,36 +36,34 @@ namespace ShopCart.BLL
 
             newItemToAddToCart.Price = matchedCatalogProduct.Price;
 
-                if (matchedCatalogProduct.OnHand < newItemToAddToCart.Quantity)
-                {
-                    return "Not enough inventory, item was not added.";
-                }
+            if (matchedCatalogProduct.PendingOnHand < newItemToAddToCart.Quantity)
+            {
+                return "Not enough inventory, item was not added.";
+            }
 
-                if (CartItems.Count != 0)
-                {
-                    var foundItemInCart = CartItems.FirstOrDefault(x => x.Name == newItemToAddToCart.Name);
+            if (CartItems.Count != 0)
+            {
+                var foundItemInCart = CartItems.FirstOrDefault(x => x.Name == newItemToAddToCart.Name);
 
-                    if (foundItemInCart != null)
-                    {
-                        foundItemInCart.Quantity += newItemToAddToCart.Quantity;                                    
-                    }
-                    else
-                    {
-                        CartItems.Add(newItemToAddToCart);
-                    }
-                    matchedCatalogProduct.OnHand -= newItemToAddToCart.Quantity;
-                    return "";
+                if (foundItemInCart != null)
+                {
+                    foundItemInCart.Quantity += newItemToAddToCart.Quantity;
                 }
                 else
                 {
                     CartItems.Add(newItemToAddToCart);
-                    matchedCatalogProduct.OnHand -= newItemToAddToCart.Quantity;
-                    return "";
                 }
+                matchedCatalogProduct.PendingOnHand -= newItemToAddToCart.Quantity;
+                return "";
+            }
+            else
+            {
+                CartItems.Add(newItemToAddToCart);
+                matchedCatalogProduct.PendingOnHand -= newItemToAddToCart.Quantity;
+                return "";
+            }
         }
 
-        //TODO - the source of the breakage in the string name is found in the method in the UI which calls to this method
-        //Go to the UI and view the method RemoveItem for details
         public void Remove(string name, List<Product> catalogProducts)
         {
             var matchedItemIndex = CartItems.FindIndex(x => x.Name == name);
@@ -70,7 +71,7 @@ namespace ShopCart.BLL
             CartItems.RemoveAt(matchedItemIndex);
 
             var matchedCatalogIndex = catalogProducts.FindIndex(x => x.Name == name);
-            catalogProducts[matchedCatalogIndex].OnHand += onHandToRestore;
+            catalogProducts[matchedCatalogIndex].PendingOnHand += onHandToRestore;
         }
     }
 }

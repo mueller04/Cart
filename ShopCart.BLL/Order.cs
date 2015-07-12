@@ -23,7 +23,7 @@ namespace ShoppingCart
         }
 
 
-        public void SubmitOrder(List<Product> catalogProducts )
+        public void SubmitOrder(List<Product> catalogProducts, decimal totalPrice)
         {
             orderNumber = _jsonRepo.IncrementFile();
 
@@ -35,6 +35,9 @@ namespace ShoppingCart
             {
                 orderDetails.Add(Helpers.ReturnDisplay(orderItem));
             }
+            //TODO the below line is throwing an invalidFormat Exception even though I use the same format method in MainWindow.xaml.cs as I result I cn't pass this to orderDetails.Add
+            //string totalPriceString = String.Format("{O:C}", totalPrice);
+            orderDetails.Add(" Total is: " + totalPrice);
 
             UpdateOnHand(catalogProducts);
             SaveNewOrder(orderDetails); 
@@ -42,6 +45,9 @@ namespace ShoppingCart
 
         private void UpdateOnHand(List<Product> catalogProducts)
         {
+            foreach (Product product in catalogProducts)
+
+            product.OnHand = product.PendingOnHand;
             _jsonRepo.SaveProducts(catalogProducts);
         }
 

@@ -12,7 +12,7 @@
         <ComboBox x:Name="cbQuantity" HorizontalAlignment="Left" Margin="179,173,0,0" VerticalAlignment="Top" Width="35" SelectionChanged="ComboBox_SelectionChanged" Loaded="cbQuantity_Loaded"/>
         <Button x:Name="btnRemove" Content="Remove Item" HorizontalAlignment="Left" Margin="277,175,0,0" VerticalAlignment="Top" Width="148" Click="btnRemove_Click"/>
         <Label x:Name="lblTotalTitle" Content="Total" HorizontalAlignment="Left" Margin="445,25,0,0" VerticalAlignment="Top"/>
-        <TextBox x:Name="txtTotal" HorizontalAlignment="Left" Height="23" Margin="445,51,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="51" RenderTransformOrigin="0.634,0.174"/>
+        <TextBox x:Name="txtTotal" HorizontalAlignment="Left" Height="23" Margin="445,51,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="51" RenderTransformOrigin="0.634,0.174" TextChanged="txtTotal_TextChanged"/>
 
     </Grid>
 </Window>

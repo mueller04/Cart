@@ -24,6 +24,7 @@ namespace ShoppingCartView
         private Order ActiveOrder;
         public IOrderItemRepository orderRepo;
         private List<Product> catalogProducts;
+        decimal TotalPrice = 0;
 
         public MainWindow()
         {
@@ -54,6 +55,7 @@ namespace ShoppingCartView
             {
                 int quantitySelected;
                 int.TryParse(cbQuantity.SelectedItem.ToString(), out quantitySelected);
+                //TODO probably return an action result object from orderRepo.Add so I can return the strings as well as the successful number of items I added so I can safely change the display by decremening the pending on hand by the amount just added / also add these features in reverse for the remove button
                 string addMessage = orderRepo.Add(lstSelection.SelectedItem.ToString(), quantitySelected, catalogProducts);
                 if (addMessage != "")
                 {
@@ -66,26 +68,25 @@ namespace ShoppingCartView
         public void DisplayOrderView()
         {
             lstDisplay.Items.Clear();
-            decimal TotalPrice = 0;
-
             var cartItemsList = ActiveCart.GetItemsInCart();
             foreach (var cartItem in cartItemsList)
             {
                 lstDisplay.Items.Add(Helpers.ReturnDisplay(cartItem));
-                
-                TotalPrice += cartItem.Price;
+                TotalPrice += cartItem.Price * cartItem.Quantity;
             }
-            //TODO this should be returning the currency format with $ to the order total in the UI but it doesn't
-            txtTotal.Text = String.Format("{0:C}",TotalPrice.ToString());
+            txtTotal.Text = String.Format("{0:C}",TotalPrice);
             cartItemsList.Clear();
         }
 
         private void SubmitOrder()
         {
             ActiveOrder = new Order(notification, ActiveCart, paymentProcessor);
-            ActiveOrder.SubmitOrder(catalogProducts);
+            ActiveOrder.SubmitOrder(catalogProducts, TotalPrice);
             lstDisplay.Items.Clear();
+            lstSelection.Items.Clear();
             txtTotal.Clear();
+            ListProductsInCatalog(productRepo);
+            TotalPrice = 0;
             MessageBox.Show("Order Submitted Successfully");
         }
 
@@ -132,21 +133,19 @@ namespace ShoppingCartView
             RemoveItem();
         }
 
-        //TODO - adding the dollar to the string in the cart listbox broke this remove method.  The problem now is the regex
-        //here does not remove all of the characters like the $ anymore.  Find a way to use regex to remove eveything
-        //probably put that into the helper method, remove the regex code from here and call the Helper. method from here.
         private void RemoveItem()
         {
             if (lstDisplay.SelectedIndex != -1)
             {
-                var regex = new Regex("\\d");
-                var displayItemName = regex.Replace(lstDisplay.SelectedItem.ToString(), String.Empty);
-                char[] charsToTrim = {':', ' '};          
-                displayItemName = displayItemName.TrimEnd(charsToTrim);
-
+                var displayItemName = Helpers.GetStringNameOnly(lstDisplay.SelectedItem.ToString());
                 orderRepo.Remove(displayItemName, catalogProducts);
                 DisplayOrderView(); 
             }
+        }
+
+        private void txtTotal_TextChanged(object sender, TextChangedEventArgs e)
+        {
+
         }
 
     }

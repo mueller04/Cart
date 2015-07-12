@@ -11,5 +11,6 @@ namespace ShopCart.BLL
         public string Name { get; set; }
         public int OnHand { get; set; }
         public decimal Price { get; set; }
+        public int PendingOnHand { get; set; }
     }
 }

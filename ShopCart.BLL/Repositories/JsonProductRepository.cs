@@ -18,8 +18,17 @@ namespace ShopCart.BLL
             using (StreamReader file = File.OpenText(@"C:\Users\mike\Documents\GitHub\Cart\files.json"))
             {
                 ProductsOnHand = (List<Product>)_serializer.Deserialize(file, typeof(List<Product>));
+                SetPendingOnHandtoInitialOnHandValue(ProductsOnHand);
                 return ProductsOnHand;;
             }      
+        }
+
+        private void SetPendingOnHandtoInitialOnHandValue(List<Product> productsOnHand)
+        {
+            foreach (Product product in productsOnHand)
+            {
+                product.PendingOnHand = product.OnHand;
+            }
         }
 
         // TO DO - see if it can save json with the nicer formatting

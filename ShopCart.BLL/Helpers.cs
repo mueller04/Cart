@@ -12,11 +12,8 @@ namespace ShopCart.BLL
     {
         public static string GetStringNameOnly(string inputStr)
         {
-            var regex = new Regex("\\d");
-            var NameOnlystr = regex.Replace(inputStr, String.Empty);
-            char[] charsToTrim = { ':', ' ', '$' };
-            NameOnlystr = NameOnlystr.TrimEnd(charsToTrim);
-            return NameOnlystr;
+            string[] nameOnlystr = inputStr.Split(':');
+            return nameOnlystr[0];
         }
 
         public static string ReturnDisplay(OrderItem item)
